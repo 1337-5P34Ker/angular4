@@ -1,0 +1,91 @@
+
+    <div class="example-config">
+          <button (click)="restoreColumns()" class="k-button">Restore hidden columns</button>
+        </div>
+  <kendo-grid [data]="gridData" [height]="600" style="width:80%"
+  (edit)="editHandler($event)" (cancel)="cancelHandler($event)"
+  (save)="saveHandler($event)" (remove)="removeHandler($event)"
+  [sortable]="{ mode: 'multiple' }"
+  [sort]="sort"
+  [filter]="state.filter"
+  [filterable]="true"
+  (sortChange)="sortChange($event)"
+  (dataStateChange)="dataStateChange($event)"
+  (add)="addHandler($event)">
+ <ng-template kendoGridToolbarTemplate>
+            <button kendoGridAddCommand>Add new</button>
+        </ng-template>
+            <kendo-grid-column field="ProductID" title="ID" width="120" editor="numeric" [hidden]="hiddenColumns.indexOf('ProductID') > -1" [filterable]="false">>
+               <ng-template kendoGridHeaderTemplate let-dataItem>
+                  {{dataItem.field}}
+                  <span class="k-icon k-i-close-outline" title="Hide"
+                    (click)="hideColumn(dataItem.field)"
+                    style="float: right;">                    
+                  </span>                 
+             </ng-template>
+  
+            </kendo-grid-column>
+            <kendo-grid-column field="ProductName" title="Name" width="300" editor="string"  [hidden]="hiddenColumns.indexOf('ProductName') > -1">
+               <ng-template kendoGridHeaderTemplate let-dataItem>
+                  {{dataItem.field}}
+                  <span class="k-icon k-i-close-outline" title="Hide"
+                    (click)="hideColumn(dataItem.field)"
+                    style="float: right;">                    
+                  </span>                   
+             </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="Category.CategoryName" title="Category" editor="string" [hidden]="hiddenColumns.indexOf('Category.CategoryName') > -1" width="300">
+             <ng-template kendoGridHeaderTemplate let-dataItem>
+                  {{dataItem.field}}
+                   <span class="k-icon k-i-close-outline" title="Hide"
+                    (click)="hideColumn(dataItem.field)"
+                    style="float: right;">                    
+                  </span>                
+             </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="UnitPrice" title="Price" editor="numeric" [hidden]="hiddenColumns.indexOf('UnitPrice') > -1" width="150" filter="numeric">
+                          <ng-template kendoGridHeaderTemplate let-dataItem>
+                  {{dataItem.field}}
+                   <span class="k-icon k-i-close-outline" title="Hide"
+                    (click)="hideColumn(dataItem.field)"
+                    style="float: right;">                    
+                  </span>     
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="UnitsInStock" title="In stock" width="200" editor="numeric" [hidden]="hiddenColumns.indexOf('UnitsInStock') > -1" filter="numeric">
+                           <ng-template kendoGridHeaderTemplate let-dataItem>
+                  {{dataItem.field}}
+                 <span class="k-icon k-i-close-outline" title="Hide"
+                    (click)="hideColumn(dataItem.field)"
+                    style="float: right;">                    
+                  </span>                    
+             </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="Discontinued" title="Discontinued" width="200" editor="boolean" [hidden]="hiddenColumns.indexOf('Discontinued') > -1" filter="boolean">
+                           <ng-template kendoGridHeaderTemplate let-dataItem>
+                  {{dataItem.field}}
+                  <span class="k-icon k-i-close-outline" title="Hide"
+                    (click)="hideColumn(dataItem.field)"
+                    style="float: right;">                    
+                  </span>                 
+             </ng-template>
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <input type="checkbox" [checked]="dataItem.Discontinued" disabled/>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-command-column title="command" width="220">
+    <ng-template kendoGridCellTemplate let-isNew="isNew">
+        <!-- edit command directive, will be visible when not in edit mode -->
+        <button kendoGridEditCommand class="k-primary">Edit</button>
+        <!-- remove command directive, will be visible when not in edit mode -->
+        <button kendoGridRemoveCommand>Remove</button>
+        <!-- save command directive, will be visible when in edit mode -->
+        <button kendoGridSaveCommand>{{ isNew ? 'Add' : 'Update' }}</button>
+        <!-- cancel command directive, will be visible when in edit mode -->
+        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+
+    </ng-template>
+</kendo-grid-command-column>
+
+        </kendo-grid>
+    
